@@ -21,6 +21,5 @@ public class UserRequest {
 	private long contactNo;
 	private Date dob;
 	private String accountType;
-	private String role;
 	
 }

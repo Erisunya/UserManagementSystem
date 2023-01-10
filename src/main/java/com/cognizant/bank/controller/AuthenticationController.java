@@ -1,13 +1,17 @@
 package com.cognizant.bank.controller;
 
+import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.crypto.spec.SecretKeySpec;
 
 import com.cognizant.bank.entities.User;
 import com.cognizant.bank.exceptions.UsernameExistsException;
 import com.cognizant.bank.model.UserRequest;
 import com.cognizant.bank.services.UserAuthService;
+import com.cognizant.bank.services.UserAuthServiceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,14 +23,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.ServletException;
+import jakarta.xml.bind.DatatypeConverter;
 
 @RestController
 @RequestMapping("auth/user")
 public class AuthenticationController {
 	
 	@Autowired
-	private UserAuthService userAuthService;
+	private UserAuthServiceImpl userAuthService;
 	private Map<String, String> authObj = new HashMap<String, String>();
 	
 	@PostMapping("/signup")
@@ -48,6 +55,7 @@ public class AuthenticationController {
 		} catch (Exception e) {	
 			authObj.put("Message", "Login failed.");
 			authObj.put("Token", null);
+			System.out.println(e);
 		}
 		
 		return new ResponseEntity<>(authObj, HttpStatus.OK);
@@ -68,11 +76,16 @@ public class AuthenticationController {
 			throw new ServletException("Username or password is invalid.");
 		}
 		
+		String SECRET_KEY = "testsecretkeydonotuseifapplicationispushedtoproduction";
+		SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
+		byte[] signingKeyBytes = DatatypeConverter.parseBase64Binary(SECRET_KEY);
+		Key signingKey = new SecretKeySpec(signingKeyBytes, signatureAlgorithm.getJcaName());
+		
 		jwtToken = Jwts.builder().setSubject(username).setIssuedAt(new Date())
 				.setExpiration(new Date(System.currentTimeMillis() + 1000000))
-				.signWith(SignatureAlgorithm.HS256, "secret key")
+				.signWith(SignatureAlgorithm.HS256, signingKey)
 				.compact();
-		
+				
 		return jwtToken;
 	}
 	

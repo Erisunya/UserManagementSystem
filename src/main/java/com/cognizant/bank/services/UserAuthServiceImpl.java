@@ -33,7 +33,6 @@ public class UserAuthServiceImpl {
 		user.setContactNo(userRequest.getContactNo());
 		user.setDob(userRequest.getDob());
 		user.setAccountType(userRequest.getAccountType());
-		user.setRole(userRequest.getRole());
 		
 		userRepository.saveAndFlush(user);
 	}
