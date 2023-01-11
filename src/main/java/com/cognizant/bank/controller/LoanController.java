@@ -3,9 +3,13 @@ package com.cognizant.bank.controller;
 import java.util.List;
 import java.util.Optional;
 
+import com.cognizant.bank.entities.Loan;
 import com.cognizant.bank.entities.User;
+import com.cognizant.bank.exceptions.LoanNotFoundException;
+import com.cognizant.bank.exceptions.UsernameNotFoundException;
 import com.cognizant.bank.model.UserRequest;
 import com.cognizant.bank.repositories.UserRepository;
+import com.cognizant.bank.services.LoanService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,6 +27,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("api/loan")
 public class LoanController {
 	
+	@Autowired
+	private LoanService loanService;
 	
-	
+	@GetMapping("/{username}")
+	public Loan showLoan(@PathVariable("username") String username) throws UsernameNotFoundException, LoanNotFoundException {
+		
+		return loanService.viewLoan(username);
+	}
 }

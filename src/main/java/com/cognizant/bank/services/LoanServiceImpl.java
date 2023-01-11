@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import com.cognizant.bank.entities.Loan;
 import com.cognizant.bank.entities.User;
+import com.cognizant.bank.exceptions.LoanNotFoundException;
 import com.cognizant.bank.exceptions.UsernameNotFoundException;
 import com.cognizant.bank.model.LoanRequest;
 import com.cognizant.bank.repositories.LoanRepository;
@@ -19,15 +20,21 @@ public class LoanServiceImpl implements LoanService{
 	private UserRepository userRepository;
 	
 	@Override
-	public User viewLoan(LoanRequest loanRequest) throws UsernameNotFoundException {
+	public Loan viewLoan(String username) throws UsernameNotFoundException, LoanNotFoundException {
 		
-		Optional<User> userOp = userRepository.findByUsername(loanRequest.getUsername());
+		Optional<User> userOp = userRepository.findByUsername(username);
 		
 		if(userOp.isEmpty()) {
 			throw new UsernameNotFoundException();
 		}
 		
-		return userOp.get();	
+		Optional<Loan> loanOp = loanRepository.findByUser(userOp.get());
+		
+		if(loanOp.isEmpty()) {
+			throw new LoanNotFoundException();
+		}
+		
+		return loanOp.get();	
 	}
 
 	@Override
