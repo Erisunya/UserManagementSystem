@@ -21,20 +21,5 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class BankController {
-	
-	@Autowired
-	private UserRepository userRepository;
-	
-	@GetMapping("/api/user/find/{id}")
-	public ResponseEntity<?> testMethod (@PathVariable("id") Integer id) {
-		
-		Optional<User> user = userRepository.findById(id);
-		
-		if(user.isEmpty()) {
-			return new ResponseEntity<String>("User not found", HttpStatus.OK);
-		}
-		
-		return new ResponseEntity<String>("Found!", HttpStatus.OK);
-	}
 
 }
