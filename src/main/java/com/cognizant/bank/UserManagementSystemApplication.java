@@ -21,7 +21,7 @@ public class UserManagementSystemApplication {
 	public FilterRegistrationBean jwtFilter() {
 		FilterRegistrationBean fb = new FilterRegistrationBean();
 		fb.setFilter(new JWTFilter());
-		fb.addUrlPatterns("/api/user/*");
+		fb.addUrlPatterns("/api/*");
 		
 		return fb;
 	}
