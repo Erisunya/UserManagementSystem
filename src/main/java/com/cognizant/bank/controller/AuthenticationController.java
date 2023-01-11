@@ -33,7 +33,7 @@ import jakarta.xml.bind.DatatypeConverter;
 public class AuthenticationController {
 	
 	@Autowired
-	private UserAuthServiceImpl userAuthService;
+	private UserAuthService userAuthService;
 	private Map<String, String> authObj = new HashMap<String, String>();
 	
 	@PostMapping("/signup")
