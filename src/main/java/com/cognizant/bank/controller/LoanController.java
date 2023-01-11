@@ -7,6 +7,7 @@ import com.cognizant.bank.entities.Loan;
 import com.cognizant.bank.entities.User;
 import com.cognizant.bank.exceptions.LoanNotFoundException;
 import com.cognizant.bank.exceptions.UsernameNotFoundException;
+import com.cognizant.bank.model.LoanRequest;
 import com.cognizant.bank.model.UserRequest;
 import com.cognizant.bank.repositories.UserRepository;
 import com.cognizant.bank.services.LoanService;
@@ -31,8 +32,16 @@ public class LoanController {
 	private LoanService loanService;
 	
 	@GetMapping("/{username}")
-	public Loan showLoan(@PathVariable("username") String username) throws UsernameNotFoundException, LoanNotFoundException {
+	public ResponseEntity<?> showLoan(@PathVariable("username") String username) throws UsernameNotFoundException, LoanNotFoundException {
 		
-		return loanService.viewLoan(username);
+		return new ResponseEntity<Loan>(loanService.viewLoan(username), HttpStatus.OK);
+	}
+	
+	@PostMapping("/apply")
+	public ResponseEntity<?> applyLoan(LoanRequest loanRequest) throws UsernameNotFoundException {
+		
+		loanService.saveLoan(loanRequest);
+		
+		return new ResponseEntity<String>("Loan successfully applied.", HttpStatus.OK);
 	}
 }
