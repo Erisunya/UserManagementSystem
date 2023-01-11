@@ -11,11 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserAuthServiceImpl {
+public class UserAuthServiceImpl implements UserAuthService {
 	
 	@Autowired
 	private UserRepository userRepository;
-
+	
+	@Override
 	public void saveUser(UserRequest userRequest) throws UsernameExistsException {
 		
 		if(userRepository.findByUsername(userRequest.getUsername()).isPresent()) {
@@ -37,6 +38,7 @@ public class UserAuthServiceImpl {
 		userRepository.saveAndFlush(user);
 	}
 	
+	@Override
 	public boolean validateUser(String username, String password) {
 		
 		Optional<User> user = userRepository.findByUsernameAndPassword(username, password);
