@@ -27,11 +27,8 @@ public class LoanServiceImpl implements LoanService{
 			throw new UsernameNotFoundException();
 		}
 		
-		return userOp.get();
-		
+		return userOp.get();	
 	}
-		
-		
 
 	@Override
 	public void saveLoan(LoanRequest loanRequest) throws UsernameNotFoundException {
@@ -51,8 +48,7 @@ public class LoanServiceImpl implements LoanService{
 		loan.setLoanDuration(loanRequest.getLoanDuration());
 		loan.setInterestRate(loanRequest.getInterestRate());
 		
-		loanRepository.saveAndFlush(loan);
-			
+		loanRepository.saveAndFlush(loan);	
 	}
 
 }
