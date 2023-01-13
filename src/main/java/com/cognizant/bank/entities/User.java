@@ -1,13 +1,16 @@
 package com.cognizant.bank.entities;
 
 import java.util.Date;
+import java.util.List;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -32,8 +35,7 @@ public class User {
 	private long contactNo;
 	private Date dob;
 	private String accountType;
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name="loan_id", referencedColumnName="id")
-	private Loan loan;
+	@OneToMany(mappedBy="user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<Loan> loans;
 	
 }

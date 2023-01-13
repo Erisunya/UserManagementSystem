@@ -9,5 +9,4 @@ public interface UserAuthService {
 	
 	public boolean validateUser(String username, String password);
 	
-	public void blacklistToken(String tokenString);
 }
