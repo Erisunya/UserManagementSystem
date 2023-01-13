@@ -2,9 +2,11 @@ package com.cognizant.bank.services;
 
 import java.util.Optional;
 
+import com.cognizant.bank.entities.Token;
 import com.cognizant.bank.entities.User;
 import com.cognizant.bank.exceptions.UsernameExistsException;
-import com.cognizant.bank.model.UserRequest;
+import com.cognizant.bank.models.UserRequest;
+import com.cognizant.bank.repositories.TokenRepository;
 import com.cognizant.bank.repositories.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,8 @@ public class UserAuthServiceImpl implements UserAuthService {
 	
 	@Autowired
 	private UserRepository userRepository;
+	@Autowired
+	private TokenRepository tokenRepository;
 	
 	@Override
 	public void saveUser(UserRequest userRequest) throws UsernameExistsException {
@@ -49,5 +53,14 @@ public class UserAuthServiceImpl implements UserAuthService {
 		
 		return true;
 		
+	}
+
+	@Override
+	public void blacklistToken(String tokenString) {
+		
+		Token token = new Token();
+		token.setTokenString(tokenString);
+		
+		tokenRepository.saveAndFlush(token);
 	}
 }

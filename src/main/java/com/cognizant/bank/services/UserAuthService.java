@@ -1,7 +1,7 @@
 package com.cognizant.bank.services;
 
 import com.cognizant.bank.exceptions.UsernameExistsException;
-import com.cognizant.bank.model.UserRequest;
+import com.cognizant.bank.models.UserRequest;
 
 public interface UserAuthService {
 	
@@ -9,4 +9,5 @@ public interface UserAuthService {
 	
 	public boolean validateUser(String username, String password);
 	
+	public void blacklistToken(String tokenString);
 }

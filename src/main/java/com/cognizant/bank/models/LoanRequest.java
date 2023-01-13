@@ -1,8 +1,6 @@
-package com.cognizant.bank.model;
+package com.cognizant.bank.models;
 
 import java.util.Date;
-
-import com.cognizant.bank.entities.User;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -9,22 +9,21 @@ import javax.crypto.spec.SecretKeySpec;
 
 import com.cognizant.bank.entities.User;
 import com.cognizant.bank.exceptions.UsernameExistsException;
-import com.cognizant.bank.model.UserRequest;
+import com.cognizant.bank.models.UserRequest;
 import com.cognizant.bank.services.UserAuthService;
-import com.cognizant.bank.services.UserAuthServiceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.io.Decoders;
-import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.ServletException;
 import jakarta.xml.bind.DatatypeConverter;
 
@@ -87,7 +86,5 @@ public class AuthenticationController {
 				.compact();
 				
 		return jwtToken;
-	}
-	
-	
+	}	
 }

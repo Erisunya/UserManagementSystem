@@ -1,4 +1,4 @@
-package com.cognizant.bank.model;
+package com.cognizant.bank.models;
 
 import java.util.Date;
 
